@@ -1,6 +1,5 @@
 import wx, numpy as np
-from .boxutil import cross, multiply, merge, lay, mat, like
-from .imutil import mix_img
+from sciapp.util.imgutil import mix_img, cross, multiply, merge, lay, mat, like
 from .mark import drawmark
 from sciapp.object import Image, Shape, mark2shp, Layer, json2shp
 from sciapp.action import ImageTool, ShapeTool
@@ -171,8 +170,7 @@ class Canvas (wx.Panel):
             print('frame rate:',int(50/max(0.001,counter[1])))
             counter[0] = counter[1] = 0
 
-    def set_tool(self, tool):
-        self.tool = tool
+    def set_tool(self, tool): self.tool = tool
 
     @property
     def scale(self):

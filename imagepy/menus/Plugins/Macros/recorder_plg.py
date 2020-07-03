@@ -1,24 +1,24 @@
-from imagepy.core.util import fileio
-from sciapp import Source
+from sciapp.action import dataio
+
 
 def readmc(path):
     with open(path) as f: return f.readlines()
 
-Source.manager('reader').add('mc', readmc, 'mc')
+dataio.ReaderManager.add('mc', readmc, 'mc')
 
-class Macros(fileio.Reader):
+class Macros(dataio.Reader):
     title = 'Run Macros'
     tag = 'mc'
-    filt = ['MC']
+    filt = 'MC'
 
 def readwf(path):
     with open(path) as f: return f.read()
 
-Source.manager('reader').add('wf', readwf, 'wf')
+dataio.ReaderManager.add('wf', readwf, 'wf')
 
-class WorkFlow(fileio.Reader):
+class WorkFlow(dataio.Reader):
     title = 'Run WorkFlow'
     tag = 'wf'
-    filt = ['wf']
+    filt = 'wf'
 
 plgs = [Macros, WorkFlow]

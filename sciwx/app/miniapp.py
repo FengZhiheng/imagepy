@@ -119,7 +119,7 @@ class MiniApp(wx.Frame, App):
         self.remove_mesh_win(event.GetEventObject().canvas)
         event.Skip()
         
-    def set_info(self, value):
+    def info(self, value):
         wx.CallAfter(self.txt_info.SetLabel, value)
 
     def set_progress(self, value):
@@ -235,7 +235,7 @@ class MiniApp(wx.Frame, App):
         self.auimgr.Update()
 
     def close_img(self, name=None):
-        names = self.get_img_name() if name is None else [name]
+        names = self.img_names() if name is None else [name]
         for name in names:
             idx = self.canvasnb.GetPageIndex(self.get_img_win(name))
             self.remove_img(self.get_img_win(name).image)
@@ -255,8 +255,7 @@ class MiniApp(wx.Frame, App):
         def one(cmds, after): 
             cmd = cmds.pop(0)
             title, para = cmd.split('>')
-            print(title, para)
-            plg = Source.manager('plugin').get(name=title)()
+            plg = self.app.plugin_manager.get(name=title)()
             after = lambda cmds=cmds: one(cmds, one)
             if len(cmds)==0: after = callafter
             wx.CallAfter(plg.start, self, eval(para), after)
@@ -296,7 +295,7 @@ class MiniApp(wx.Frame, App):
         dic = {wx.ID_YES:'yes', wx.ID_NO:'no', wx.ID_CANCEL:'cancel'}
         return dic[rst]
 
-    def getpath(self, title, filt, io, name=''):
+    def get_path(self, title, filt, io, name=''):
         filt = '|'.join(['%s files (*.%s)|*.%s'%(i.upper(),i,i) for i in filt])
         dic = {'open':wx.FD_OPEN, 'save':wx.FD_SAVE}
         dialog = wx.FileDialog(self, title, '', name, filt, dic[io])

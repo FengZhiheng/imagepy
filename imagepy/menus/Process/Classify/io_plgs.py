@@ -1,10 +1,10 @@
-from imagepy.core.engine import Filter, Simple
-from sciapp import Source
+from sciapp.action import Filter, Simple
+from imagepy.app import ColorManager
 # from imagepy.core import ImagePlus
 import numpy as np
 
 class BuildMark(Simple):
-    """Closing: derived from imagepy.core.engine.Filter """
+    """Closing: derived from sciapp.action.Filter """
     title = 'Build Mark Image'
     note = ['all']
     para = {'mode':'Mask', 'cm':'16_Colors', 'n':2, 'slice':True}
@@ -21,7 +21,7 @@ class BuildMark(Simple):
         newips.back = ips
         idx = ['None', 'Max', 'Min', 'Mask', '2-8mix', '4-6mix', '5-5mix', '6-4mix', '8-2mix']
         modes = ['set', 'max', 'min', 'msk', 0.2, 0.4, 0.5, 0.6, 0.8]
-        newips.lut = Source.manager('colormap').get(para['cm'])
+        newips.lut = ColorManager.get(para['cm'])
         newips.chan_mode = modes[idx.index(para['mode'])]
         #newips.range = (0, para['n'])
         IPy.show_ips(newips)

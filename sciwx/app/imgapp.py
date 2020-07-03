@@ -11,7 +11,6 @@ from sciwx.text import MDFrame, TextFrame
 from sciwx.plot import PlotFrame
 from sciapp import App, Source
 
-
 class ImageApp(wx.Frame, App):
     def __init__( self, parent ):
         wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = 'ImageApp', 
@@ -75,7 +74,7 @@ class ImageApp(wx.Frame, App):
         self.remove_tab(event.GetEventObject().grid.table)
         event.Skip()
         
-    def set_info(self, value):
+    def info(self, value):
         wx.CallAfter(self.txt_info.SetLabel, value)
 
     def set_progress(self, value):
@@ -153,7 +152,7 @@ class ImageApp(wx.Frame, App):
         dic = {wx.ID_YES:'yes', wx.ID_NO:'no', wx.ID_CANCEL:'cancel'}
         return dic[rst]
 
-    def getpath(self, title, filt, io, name=''):
+    def get_path(self, title, filt, io, name=''):
         filt = '|'.join(['%s files (*.%s)|*.%s'%(i.upper(),i,i) for i in filt])
         dic = {'open':wx.FD_OPEN, 'save':wx.FD_SAVE}
         dialog = wx.FileDialog(self, title, '', name, filt, dic[io])
